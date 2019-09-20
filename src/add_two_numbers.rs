@@ -20,30 +20,29 @@ use std::ptr::NonNull;
 
 struct List {
     head: Option<Box<ListNode>>,
-    tail: NonNull<Option<Box<ListNode>>>,
+    tail: Option<NonNull<Box<ListNode>>>,
 }
 
 impl List {
     fn new() -> List {
-        let mut result = List {
+        List {
             head: None,
-            tail: NonNull::dangling(),
-        };
-        result.tail = NonNull::from(&mut result.head);
-        return result;
+            tail: None,
+        }
     }
 
     fn append(&mut self, val: i32) {
         let node = Some(Box::new(ListNode::new(val)));
         unsafe {
-            match self.tail.as_mut() {
+            match self.tail {
                 None => {
                     self.head = node;
-                    self.tail = NonNull::from(&mut self.head);
+                    self.tail = Some(NonNull::from(self.head.as_mut().unwrap()));
                 }
-                Some(t) => {
-                    t.next = node;
-                    self.tail = NonNull::from(&mut t.next);
+                Some(mut t) => {
+                    let last_node = t.as_mut();
+                    last_node.next = node;
+                    self.tail = Some(NonNull::from(last_node.next.as_mut().unwrap()));
                 }
             }
         }
@@ -149,7 +148,8 @@ mod test {
     #[test]
     fn test() {
         assert_eq!(
-            Solution::add_two_numbers(vec![2, 4, 3].into_list(), vec![5, 6, 4].into_list()).into_vec(),
+            Solution::add_two_numbers(vec![2, 4, 3].into_list(), vec![5, 6, 4].into_list())
+                .into_vec(),
             vec![7, 0, 8]
         );
         assert_eq!(
