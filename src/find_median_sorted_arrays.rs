@@ -38,7 +38,6 @@ impl Solution {
             v.push(b[j]);
         }
         v.sort_unstable();
-        println!("{:?}", v);
 
         if (len_a + len_b) % 2 == 0 {
             match v.len() {
