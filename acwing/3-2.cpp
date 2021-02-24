@@ -14,12 +14,8 @@ int main() {
   }
 
   for (int i = 1; i <= N; i++) {
-    for (int j = 0; j <= V; j++) {
-      if (j >= v[i]) {
-        states[j] = std::max(states[j], states[j - v[i]] + w[i]);
-      } else {
-        states[j] = states[j];
-      }
+    for (int j = v[i]; j <= V; j++) {
+      states[j] = std::max(states[j], states[j - v[i]] + w[i]);
     }
   }
 
