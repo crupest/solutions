@@ -29,7 +29,7 @@ int main() {
     result += 2 * max;
   }
 
-  if (M == 1 && min > 0) {
+  if (M != 0 && min > 0) {
     result -= 2 * min;
   }
 
