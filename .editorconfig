@@ -1,2 +1,5 @@
+[*.c]
+tab_width = 2
+
 [*.cpp]
 tab_width = 2
