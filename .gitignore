@@ -5,3 +5,5 @@
 *.obj
 *.exp
 *.lib
+
+.DS_Store
